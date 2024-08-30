@@ -1,4 +1,8 @@
 const express = require('express');
+
+const dotenv = require('dotenv');
+const paymentRoutes = require('./routes/payment');
+
 const mongoose = require('mongoose');
 
 const dotenv = require('dotenv');
@@ -17,6 +21,14 @@ app.use(express.json());
 
 // Routes
 
+app.use('/api/payments', paymentRoutes);
+
+// Start the server
+app.listen(process.env.PORT, () => {
+    console.log(`Server started on port ${process.env.PORT}`);
+});
+
+
 app.use('/api/orders', orderRoutes);
 
 app.use('/api/auth', authRoutes);
@@ -33,3 +45,4 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
         app.listen(process.env.PORT, () => console.log(`Server started on port ${process.env.PORT}`));
     })
     .catch(err => console.error(err));
+
